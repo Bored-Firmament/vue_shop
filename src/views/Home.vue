@@ -1,18 +1,23 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="homeView">
+    <el-button type="info" @click="logout">退出</el-button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
+  methods: {
+    logout() {
+      // 销毁sessionStorage中的token
+      window.sessionStorage.removeItem('token')
+      // 返回登录页
+      this.$router.replace('/login')
+      this.$message.info('提示:您已退出登录!')
+    }
   }
 }
 </script>
+
+<style lang="less" scoped>
+</style>
