@@ -10,7 +10,7 @@
     <!-- 卡片视图区域 -->
     <el-card class="box-card">
       <!-- 列表区域 -->
-      <el-table :data="rightlist" style="width: 100%" border stripe>
+      <el-table :data="rightsList" style="width: 100%" border stripe>
         <el-table-column label="#" type="index"></el-table-column>
         <el-table-column label="权限名称" prop="authName"></el-table-column>
         <el-table-column label="路径" prop="path"></el-table-column>
@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       // 权限列表
-      rightlist:[],
+      rightsList:[],
     }
   },
   created() {
@@ -41,10 +41,9 @@ export default {
   methods: {
     async getRightList() {
       const {data: res} = await this.$http.get('rights/list')
-      console.log(res);
       if (res.meta.status !== 200)
         return this.$message.error('获取权限列表失败')
-      this.rightlist = res.data
+      this.rightsList = res.data
     }
   }
 }

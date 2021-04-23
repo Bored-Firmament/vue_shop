@@ -24,7 +24,7 @@
       </el-row>
 
       <!-- 列表区域 -->
-      <el-table :data="userlist" style="width: 100%" border stripe>
+      <el-table :data="userList" style="width: 100%" border stripe>
         <el-table-column label="#" type="index"></el-table-column>
         <el-table-column label="姓名" prop="username"></el-table-column>
         <el-table-column label="邮箱" prop="email"></el-table-column>
@@ -53,7 +53,7 @@
              @click="deleteUserById(scope.row.id)"></el-button>
             <!-- 分配角色(修改角色) -->
             <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
-              <el-button size="mini" type="warning" icon="el-icon-setting"></el-button>
+              <el-button size="mini" type="warning" icon="el-icon-setting" @click="editRoleDialogShow(scope.row)"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -76,7 +76,7 @@
      title="添加用户" 
      :visible.sync="addDialogVisible" 
      width="50%" 
-     @close="addDialogClosed">
+     @close="addDialogClosedUser">
       <!-- 对话框-主体区域 -->
       <el-form
         ref="addFormRef"
@@ -109,7 +109,7 @@
     <!-- 修改用户(基本)信息的对话框 -->
     <el-dialog
      title="修改用户信息" 
-     :visible.sync="editDialogVisible" 
+     :visible.sync="editInfoDialogVisibleUser" 
      width="50%" 
      @close="editDialogClosed">
       <!-- 对话框-主体区域 -->
@@ -132,8 +132,38 @@
       <!-- 对话框-底部区域 -->
       <template v-slot:footer>
         <span class="dialog-footer">
-          <el-button @click="editDialogVisible = false">取 消</el-button>
+          <el-button @click="editInfoDialogVisibleUser = false">取 消</el-button>
           <el-button type="primary" @click="editUserInfo">确 定</el-button>
+        </span>
+      </template>
+    </el-dialog>
+
+    <!-- 分配角色的对话框 -->
+    <el-dialog
+     title="分配角色" 
+     :visible.sync="editRoleDialogVisibleUser" 
+     width="50%" 
+     @close="editRoleDialogClosed">
+      <!-- 对话框-主体区域 -->
+      <div class="edit-d-box">
+        <p><span>当前的用户:</span>{{editRoleForm.username}}</p>
+        <p><span>当前的角色:</span>{{editRoleForm.role_name}}</p>
+        <p>
+          <span>分配新角色:</span>
+          <el-select v-model="editRoleSelectValue" placeholder="请选择">
+            <el-option
+              v-for="item in rolelist"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </p>
+      </div>
+      <template v-slot:footer>
+        <span class="dialog-footer">
+          <el-button @click="editRoleDialogClosed">取 消</el-button>
+          <el-button type="primary" @click="editRoleUser">确 定</el-button>
         </span>
       </template>
     </el-dialog>
@@ -169,11 +199,11 @@ export default {
         pagenum: 1,
         pagesize: 5
       },
-      // 符合某个条件的列表
-      userlist: [],
+      // 符合某个条件的用户列表
+      userList: [],
       // 列表总数
       total: 0,
-      // dialog对话框是否显示
+      // 添加用户 对话框 是否显示
       addDialogVisible: false,
       // 添加用户的表单数据
       addForm: {
@@ -205,8 +235,8 @@ export default {
           { validator: checkMobile, trigger: 'blur' }
         ]
       },
-      // dialog对话框是否显示
-      editDialogVisible: false,
+      // 修改用户 对话框 是否显示
+      editInfoDialogVisibleUser: false,
       // 修改用户的表单数据
       editForm: {
         id: '',
@@ -224,7 +254,15 @@ export default {
           { required: true, message: '手机号不能为空', trigger: 'blur' },
           { validator: checkMobile, trigger: 'blur' }
         ]
-      }
+      },
+      // 分配角色 对话框 是否显示
+      editRoleDialogVisibleUser: false,
+      // 分配角色的数据
+      editRoleForm: {},
+      // 角色列表
+      rolelist: [],
+      // 分配的新角色
+      editRoleSelectValue: '',
     }
   },
   created() {
@@ -239,7 +277,7 @@ export default {
       if (res.meta.status !== 200)
         return this.$message.error('获取用户列表失败')
       this.total = res.data.total
-      this.userlist = res.data.users
+      this.userList = res.data.users
     },
     // 监听 pageSize 改变的事件
     handleSizeChange(newSize) {
@@ -263,8 +301,9 @@ export default {
       }
       this.$message.success('更新用户状态成功')
     },
+
     // 监听 添加用户对话框 关闭的事件
-    addDialogClosed() {
+    addDialogClosedUser() {
       this.$refs.addFormRef.resetFields()
     },
     // 监听 添加用户对话框 显示的事件
@@ -286,6 +325,7 @@ export default {
         this.getUserList();
       })
     },
+
     // 监听 修改用户对话框 关闭的事件
     editDialogClosed() {
       this.$refs.editFormRef.resetFields()
@@ -297,7 +337,7 @@ export default {
         return this.$message.error('获取用户信息失败')
       }
       this.editForm = res.data;
-      this.editDialogVisible = true;
+      this.editInfoDialogVisibleUser = true;
     },
     // 监听 修改用户 的事件
     editUserInfo() {
@@ -312,11 +352,12 @@ export default {
         if(res.meta.status !== 200) return this.$message.error('更新用户信息失败')
         this.$message.success('更新用户信息成功')
         // 隐藏dialog对话框
-        this.editDialogVisible = false;
+        this.editInfoDialogVisibleUser = false;
         // 重新调用数据,刷新页面
         this.getUserList();
       })
     },
+
     // 监听 删除用户 的事件
     async deleteUserById(id) {
       // 弹框
@@ -338,6 +379,39 @@ export default {
       this.$message.success('删除用户成功')
       this.getUserList()
     },
+
+    // 监听 分配角色对话框 关闭的事件
+    editRoleDialogClosed() {
+      this.editRoleDialogVisibleUser = false;
+      // 清空对话框中选项框的值
+      this.editRoleSelectValue = '';
+    },
+    // 监听 分配角色对话框 显示的事件
+    async editRoleDialogShow(user) {
+      this.editRoleForm = user;
+      // 获取角色列表
+      const {data: res} = await this.$http.get('roles')
+      if(res.meta.status !== 200) return this.$message.error('获取角色列表失败')
+      this.rolelist = res.data;
+      // 显示
+      this.editRoleDialogVisibleUser = true;
+    },
+    // 监听 分配角色 的事件
+    async editRoleUser() {
+      if(!this.editRoleSelectValue) return this.$message.error('请选择要分配的角色')
+      // 修改 用户 的 角色(分配角色)
+      const {data: res} = await this.$http.put(`users/${this.editRoleForm.id}/role`,{
+        rid: this.editRoleSelectValue
+      })
+      if(res.meta.status === 400) return this.$message.error(res.meta.msg);
+      else if(res.meta.status !== 200) return this.$message.error('分配角色失败');
+      
+      this.$message.success('分配角色成功')
+      // 请求新数据列表(刷新)
+      this.getUserList();
+      // 隐藏对话框
+      this.editRoleDialogVisibleUser = false;
+    },
   }
 }
 </script>
@@ -345,5 +419,9 @@ export default {
 <style lang="less" scoped>
 .users {
   height: 100%;
+
+  .edit-d-box span {
+    margin-right: 10px;
+  }
 }
 </style>

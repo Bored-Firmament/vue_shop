@@ -36,6 +36,12 @@ import {
   Dialog,
   /* 标签 */
   Tag,
+  /* 树形控件 */
+  Tree,
+  /* 选择器 */
+  Select,
+  Option,
+  
   /* 弹框 */
   MessageBox,
   /* 消息提示 */
@@ -65,6 +71,9 @@ Vue.use(Tooltip)
 Vue.use(Pagination)
 Vue.use(Dialog)
 Vue.use(Tag)
+Vue.use(Tree)
+Vue.use(Select)
+Vue.use(Option)
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
