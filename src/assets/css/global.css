@@ -21,3 +21,13 @@ body,
 .el-table {
   margin-top: 15px;
 }
+
+/* 级联选择器样式异常,添加以下样式修复 */
+/* 数据过多,导致高度多高,导致显示超出屏幕 */
+.el-cascader-panel {
+  max-height: 300px;
+}
+/* 横向滚动条出现 */
+.el-cascader-menu__wrap {
+  overflow-x: hidden;
+}
