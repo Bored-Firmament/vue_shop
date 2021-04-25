@@ -54,8 +54,8 @@
         </el-table-column>
         <el-table-column label="操作" width="180">
           <template v-slot="scope">
-            <el-button size="mini" type="primary" icon="el-icon-edit" @click="editDialogShow(scope.row.cat_id)">编辑</el-button>
-            <el-button size="mini" type="danger" icon="el-icon-delete" @click="deleteCate(scope.row.cat_id)">删除</el-button>
+            <el-button class="circle-button" size="mini" type="primary" icon="el-icon-edit" @click="editDialogShow(scope.row.cat_id)">编辑</el-button>
+            <el-button class="circle-button" size="mini" type="danger" icon="el-icon-delete" @click="deleteCate(scope.row.cat_id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -92,7 +92,7 @@
               :options="parentCateList"
               :props="cascaderProps"
               @change="parentCateChange"
-              clearable change-on-select></el-cascader>
+              clearable></el-cascader>
           </el-form-item>
         </el-form>
         <span class="dialog-footer">
@@ -162,6 +162,7 @@ export default {
       // 指定 级联选择器 的 配置对象
       cascaderProps: {
         expandTrigger: 'hover',
+        checkStrictly: true,    // 取消父子关联,达到可以选择父级的效果
         value: 'cat_id',
         label: 'cat_name',
         children: 'children',
@@ -316,8 +317,8 @@ export default {
       // 请求
       const {data: res} = await this.$http.delete('categories/' + id)
       // 删除是否成功
-      if(res.meta.status !== 200) return this.$message.success('删除商品分类失败')
-      this.$message.error('删除商品分类成功')
+      if(res.meta.status !== 200) return this.$message.error('删除商品分类失败')
+      this.$message.success('删除商品分类成功')
       // 获取新列表
       this.getCateList();
     }

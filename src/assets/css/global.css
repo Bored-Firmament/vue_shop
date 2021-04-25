@@ -22,6 +22,10 @@ body,
   margin-top: 15px;
 }
 
+.circle-button {
+  border-radius: 20px;
+}
+
 /* 级联选择器样式异常,添加以下样式修复 */
 /* 数据过多,导致高度多高,导致显示超出屏幕 */
 .el-cascader-panel {

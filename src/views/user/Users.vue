@@ -41,19 +41,21 @@
           <template v-slot="scope">
             <!-- 修改按钮(修改基本信息) -->
             <el-button
+             class="circle-button"
              size="mini" 
              type="primary" 
              icon="el-icon-edit" 
              @click="editDialogShow(scope.row.id)"></el-button>
             <!-- 删除按钮 -->
             <el-button
+             class="circle-button"
              size="mini" 
              type="danger" 
              icon="el-icon-delete" 
              @click="deleteUserById(scope.row.id)"></el-button>
             <!-- 分配角色(修改角色) -->
             <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
-              <el-button size="mini" type="warning" icon="el-icon-setting" @click="editRoleDialogShow(scope.row)"></el-button>
+              <el-button class="circle-button" size="mini" type="warning" icon="el-icon-setting" @click="editRoleDialogShow(scope.row)"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -425,4 +427,6 @@ export default {
     margin-right: 10px;
   }
 }
+
+
 </style>

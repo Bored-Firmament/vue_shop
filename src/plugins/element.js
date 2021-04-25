@@ -43,6 +43,11 @@ import {
   Option,
   /* 级联选择器 */
   Cascader,
+  /* 警告信息 */
+  Alert,
+  /* 标签页 */
+  Tabs,
+  TabPane,
   
   /* 弹框 */
   MessageBox,
@@ -77,6 +82,9 @@ Vue.use(Tree)
 Vue.use(Select)
 Vue.use(Option)
 Vue.use(Cascader)
+Vue.use(Alert)
+Vue.use(Tabs)
+Vue.use(TabPane)
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

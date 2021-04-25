@@ -7,43 +7,21 @@ const Users = () => import('@/views/user/Users.vue')
 const Roles = () => import('@/views/power/Roles.vue')
 const Rights = () => import('@/views/power/Rights.vue')
 const Cate = () => import('@/views/goods/Cate.vue')
+const Params = () => import('@/views/goods/Params.vue')
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    redirect: '/login'
-  },
-  {
-    path:'/login',
-    component: Login
-  },
-  {
-    path:'/home',
-    component: Home,
-    redirect: '/welcome',
+  {path: '/',redirect: '/login'},
+  {path:'/login',component: Login},
+  {path:'/home',component: Home,redirect: '/welcome',
     children: [
-      {
-        path: '/welcome',
-        component: Welcome
-      },
-      {
-        path: '/users',
-        component: Users
-      },
-      {
-        path: '/roles',
-        component: Roles
-      },
-      {
-        path: '/rights',
-        component: Rights
-      },
-      {
-        path: '/categories',
-        component: Cate
-      }
+      {path: '/welcome',component: Welcome},
+      {path: '/users',component: Users},
+      {path: '/roles',component: Roles},
+      {path: '/rights',component: Rights},
+      {path: '/categories',component: Cate},
+      {path: '/params',component: Params}
     ]
   }
 ]
