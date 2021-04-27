@@ -9,23 +9,23 @@ body,
   min-width: 1366px;
 }
 
+/* element UI组件 类名 */
 .el-breadcrumb {
   margin-bottom: 15px;
 }
-
 .el-card {
   width: 100%;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .1) !important;
 }
-
 .el-table {
   margin-top: 15px;
 }
-
-.circle-button {
-  border-radius: 20px;
+.el-steps {
+  margin: 15px 0;
 }
-
+.el-step__title {
+  font-size: 13px;
+}
 /* 级联选择器样式异常,添加以下样式修复 */
 /* 数据过多,导致高度多高,导致显示超出屏幕 */
 .el-cascader-panel {
@@ -34,4 +34,23 @@ body,
 /* 横向滚动条出现 */
 .el-cascader-menu__wrap {
   overflow-x: hidden;
+}
+/* List页中expand展开项设置label宽度 */
+.list .demo-table-expand label {
+  font-size: 12px !important;
+  width: 100px !important;
+  color: #99a9bf !important;
+}
+/* element UI组件 自定义类名 */
+.circle-button {
+  border-radius: 20px;
+}
+.p20 {
+  font-size: 20px
+}
+
+
+/* 富文本组件 */
+.ql-editor {
+  height: 300px;
 }

@@ -69,8 +69,8 @@
         :page-sizes="[1, 2, 5, 10]"
         :page-size="5"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-      ></el-pagination>
+        :total="total">
+      </el-pagination>
     </el-card>
 
     <!-- 添加用户的对话框 -->
@@ -376,9 +376,7 @@ export default {
         return this.$message.info('已取消删除用户')
       }
       const {data: res} = await this.$http.delete('users/' + id)
-      if(res.meta.status !== 200) {
-        return this.$message.error('删除用户失败')
-      }
+      if(res.meta.status !== 200) return this.$message.error('删除用户失败')
       this.$message.success('删除用户成功')
       this.getUserList()
     },

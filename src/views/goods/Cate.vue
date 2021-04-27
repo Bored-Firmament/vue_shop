@@ -326,9 +326,6 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.p20 {
-  font-size: 20px
-}
 .el-cascader {
   width: 100%;
 }
