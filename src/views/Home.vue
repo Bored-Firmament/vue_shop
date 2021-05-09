@@ -3,7 +3,7 @@
     <!-- 页面顶部 -->
     <el-header>
       <div>
-        <img src="@/assets/logo.png" alt="望logo">
+        <img src="@/assets/img/logo.png" alt="望logo">
         <span>电商后台管理系统</span>
         <span>Version:1.0.0</span>
       </div>

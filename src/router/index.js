@@ -48,4 +48,5 @@ router.beforeEach((to, from, next) => {
   // next() 放行; next('xxx') 强制跳转到xxx;
   next();
 });
+
 export default router

@@ -3,7 +3,7 @@
     <div class="login_box">
       <!-- logo 区域 -->
       <div class="picture_box">
-        <img src="@/assets/logo.png">
+        <img src="@/assets/img/logo.png">
       </div>
       <!-- 登录表单区域Element UI -->
       <el-form

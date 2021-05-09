@@ -16,20 +16,30 @@ import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
 
+// 导入进度条
+import NProgress from 'nprogress'
+// 导入进度条样式
+import 'nprogress/nprogress.css'
+
 import axios from 'axios'
 // 配置请求的根路径
 axios.defaults.baseURL = 'http://www.ysqorz.top:8888/api/private/v1/'
 // axios 拦截器中给请求添加token
+// request时 展示进度条NProgress.start()
 axios.interceptors.request.use(config => {
+  NProgress.start();
   // 将token用请求的请求头中的Authorization保存
   config.headers.Authorization = window.sessionStorage.getItem('token');
   // 一定要返回!不然请求就无了
   return config;
 })
-// axios 拦截器中给响应的数据进行处理,响应的数据多了一层,最外层我们不需要,其中的data才是服务器响应给我们的
-// axios.interceptors.response.use(res => {
-//   return res.data;
-// })
+// response时 展示进度条NProgress.done()
+axios.interceptors.response.use(res => {
+  NProgress.done();
+  // axios 拦截器中给响应的数据进行处理,响应的数据多了一层,最外层我们不需要,其中的data才是服务器响应给我们的
+  // return res.data; // 因为项目用 async 和 await 这里就不用啦
+  return res;
+})
 
 Vue.prototype.$http = axios
 
