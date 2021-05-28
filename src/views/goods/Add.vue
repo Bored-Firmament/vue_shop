@@ -254,7 +254,7 @@ export default {
     // 处理图片预览效果
     handlePreview(file) {
       console.log(file);
-      this.previewPath = "http://www.ysqorz.top:8888/" + file.response.data.tmp_path;
+      this.previewPath = "http://timemeetyou.com:8889/" + file.response.data.tmp_path;
       this.previewVisible = true;
     },
     // 处理移除图片的操作 
