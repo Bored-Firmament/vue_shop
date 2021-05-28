@@ -15,7 +15,7 @@ import NProgress from 'nprogress'
 
 import axios from 'axios'
 // 配置请求的根路径
-axios.defaults.baseURL = 'http://www.ysqorz.top:8888/api/private/v1/'
+axios.defaults.baseURL = 'http://timemeetyou.com:8889/api/private/v1/'
 // axios 拦截器中给请求添加token
 // request时 展示进度条NProgress.start()
 axios.interceptors.request.use(config => {
