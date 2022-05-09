@@ -140,6 +140,7 @@ export default {
       cityData: regionData,
       // 物流信息 对话框 是否显示
       progressVisible: false,
+      reverse: true,
       expressData: [
         {
           "time": "2018-05-10 09:39:00",
